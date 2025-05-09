@@ -13,8 +13,10 @@ class RecipeController extends Controller
 {
     public function index1()
     {
-        // Récupère les recettes avec l’auteur (relation user)
-        $recipes = Recipe::with('user')->latest()->take(12)->get();
+        // Get all recipes with their authors and categories
+        $recipes = Recipe::with(['user', 'category'])
+            ->latest()
+            ->paginate(12);
 
         return view('recipes.showRecipe', compact('recipes'));
     }
@@ -22,7 +24,6 @@ class RecipeController extends Controller
     public function index()
     {
         $recipes = Recipe::with(['user', 'category'])
-            ->where('user_id', Auth::id()) // seulement les recettes du user connecté
             ->latest()
             ->paginate(10);
 
@@ -80,7 +81,7 @@ class RecipeController extends Controller
         
         // Store in public/recettes directory
         $path = $image->storeAs('recettes', $imageName, 'public');
-        $recipe->image = '/storage/' . $path; // Prepend /storage/ to the path for correct asset URL
+        $recipe->image = $path; // Store just the relative path
     }
 
     $recipe->save();

@@ -6,7 +6,7 @@
         <div class="row g-0">
             <div class="col-md-4">
                 @if($recipe->image)
-                    <img src="{{ asset('storage/' . str_replace('/storage/', '', $recipe->image)) }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="{{ $recipe->title }}">
+                    <img src="{{ strpos($recipe->image, 'http') === 0 ? $recipe->image : asset('storage/' . $recipe->image) }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="{{ $recipe->title }}">
                 @else
                     <div class="bg-light text-center py-5 h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="bi bi-camera text-muted" style="font-size: 4rem;"></i>

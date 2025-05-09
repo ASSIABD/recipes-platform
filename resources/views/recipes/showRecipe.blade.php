@@ -36,7 +36,7 @@
         <div class="col">
             <a href="{{ route('recipes.show', $recipe->id) }}" class="text-decoration-none text-dark">
                 <div class="card h-100 shadow-sm">
-                    <img src="{{ asset('storage/' . str_replace('/storage/', '', $recipe->image)) }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="Recipe image">
+                    <img src="{{ $recipe->image ? asset($recipe->image) : asset('images/placeholder.jpg') }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="{{ $recipe->title }}">
                     <div class="card-body">
                         <h6 class="card-title">{{ $recipe->title }}</h6>
                         <div class="d-flex justify-content-between align-items-center">

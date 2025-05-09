@@ -11,21 +11,25 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        // Create a user if not exists
-        $user = User::where('email', 'notsophie18@gmail.com')->first();
-        if (!$user) {
+        // Get all existing users
+        $users = User::all();
+
+        // If no users exist, create a sample user
+        if ($users->isEmpty()) {
             $user = User::create([
                 'name' => 'Sophie',
                 'email' => 'notsophie18@gmail.com',
                 'password' => bcrypt('password'),
             ]);
+            $users[] = $user;
         }
 
-        // Clear existing recipes for this user
-        Recipe::where('user_id', $user->id)->delete();
+        // Clear existing recipes for all users
+        Recipe::query()->delete();
 
-        // Create sample recipes for the user
-        for ($i = 1; $i <= 10; $i++) {
+        // Create sample recipes for each user
+        foreach ($users as $user) {
+            for ($i = 1; $i <= 5; $i++) {
             // Get a random category ID (assuming categories exist)
             $categoryId = \App\Models\Category::inRandomOrder()->first()->id;
             
