@@ -56,17 +56,17 @@
             font-weight: bold;
         }
     </style>
-
-
-
 </head>
 <body>
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
         <div class="container">
-            <a class="navbar-brand" href="#"><img src="{{ asset('images/cuisine1.png') }}" alt="Logo" style="width: 30px;">&nbsp; Cook & Share</a>
-            <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="#"><img src="{{ asset('images/cuisine1.png') }}" alt="Logo" style="width: 30px;">  Cook & Share</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavContent" aria-controls="navbarNavContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavContent">
                 <ul class="navbar-nav me-auto ms-4">
                     <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('recette.index') }}">Recipes</a></li>
@@ -75,12 +75,16 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url('/chatbot') }}">IA</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('add-recipe') }}">Add Recipe</a></li>
                 </ul>
-                <!--<div>
-                    <button class="btn btn-outline-light me-2">👤</button>
-                    <button class="btn btn-light">➕</button>
-                </div>-->
-                <div>
-                    <!-- Connection Button (Login) -->
+                
+                <!-- Right aligned items -->
+                <div class="d-flex align-items-center">
+                    <!-- HEART ICON BUTTON -->
+                    <a href="{{-- route('favorites.index') or '#' for now --}}" class="btn btn-outline-light me-2" title="Favoris">
+                        <i class="bi bi-heart"></i>
+                        {{-- For a filled heart, use: <i class="bi bi-heart-fill"></i> --}}
+                    </a>
+
+                    <!-- Connection/Logout Button -->
                     @guest
                         <a class="btn btn-outline-light me-2" href="{{ route('login') }}">Connexion</a>
                     @else
@@ -94,14 +98,10 @@
         </div>
     </nav>
 
- 
-
     <!-- CONTENU -->
     <main>
         @yield('content')
     </main>
-
-    
 
 </body>
 </html>
