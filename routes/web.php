@@ -12,9 +12,7 @@ use App\Http\Controllers\FavoriteController;
 
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/navBare', function () {
     return view('layouts.navBare');

@@ -21,12 +21,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Get the user's recipes
-        $userRecipes = Recipe::where('user_id', auth()->id())
+        // Get the latest 4 recipes from all users
+        $latestRecipes = Recipe::with(['user', 'category'])
                             ->latest()
-                            ->take(5)
+                            ->take(4)
                             ->get();
         
-        return view('home', compact('userRecipes'));
+        return view('welcome', compact('latestRecipes'));
     }
 }

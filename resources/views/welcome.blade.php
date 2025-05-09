@@ -629,98 +629,37 @@
     </section>
 
     <!-- LATEST RECIPES SECTION -->
-    @php
-        $recipes = [
-            [
-                'title' => 'Slow Cooker Loaded Potato Soup',
-                'image' => asset('images/recipes/potato-soup.jpg'),
-                'rating' => rand(1, 5),
-                'id' => 1,
-                'category' => 'Soups',
-                'difficulty' => 'easy',
-                'duration' => 45,
-                'description' => 'A comforting creamy potato soup loaded with bacon, cheese, and sour cream.',
-                'author' => [
-                    'avatar' => 'https://via.placeholder.com/40?text=S1',
-                    'name' => 'Salim Aldosery'
-                ]
-            ],
-            [
-                'title' => 'Eggs Toast',
-                'image' => asset('images/recipes/fried-egg-toast.jpg'),
-                'rating' => rand(1, 5),
-                'id' => 2,
-                'category' => 'Breakfast',
-                'difficulty' => 'easy',
-                'duration' => 15,
-                'description' => 'A quick and delicious breakfast with perfectly toasted bread and sunny-side up eggs.',
-                'author' => [
-                    'avatar' => 'https://via.placeholder.com/40?text=S2',
-                    'name' => 'Salim Aldosery'
-                ]
-            ],
-            [
-                'title' => 'Spicy Chicken with Rice',
-                'image' => asset('images/recipes/chicken-rice.jpg'),
-                'rating' => rand(1, 5),
-                'id' => 3,
-                'category' => 'Main Course',
-                'difficulty' => 'medium',
-                'duration' => 30,
-                'description' => 'A flavorful spicy chicken dish served with fluffy rice and fresh vegetables.',
-                'author' => [
-                    'avatar' => 'https://via.placeholder.com/40?text=S3',
-                    'name' => 'Salim Aldosery'
-                ]
-            ],
-            [
-                'title' => 'Classic Pad Thai Noodles',
-                'image' => asset('images/recipes/pad-thai.jpg'),
-                'rating' => rand(1, 5),
-                'id' => 4,
-                'category' => 'Asian Cuisine',
-                'difficulty' => 'medium',
-                'duration' => 25,
-                'description' => 'A delicious Thai stir-fried noodle dish with shrimp, tofu, and a tangy tamarind sauce.',
-                'author' => [
-                    'avatar' => 'https://via.placeholder.com/40?text=S4',
-                    'name' => 'Salim Aldosery'
-                ]
-            ]
-        ];
-    @endphp
-
     <section class="latest-recipes-section">
         <div class="container">
             <h2>Latest Recipes</h2>
             <p class="section-description">
                 Discover our latest culinary creations.
             </p>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-                @foreach($recipes as $recipe)
-                    <div class="col">
-                        <a href="{{ route('recipes.show', $recipe['id']) }}" class="text-decoration-none text-dark">
-                            <div class="card h-100 shadow-sm">
-                                <img src="{{ $recipe['image'] ?? asset('images/placeholder.jpg') }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="{{ $recipe['title'] }}">
-                                <div class="card-body">
-                                    <h6 class="card-title">{{ $recipe['title'] }}</h6>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-warning">★★★★☆</span>
-                                        <small class="text-muted">{{ $recipe['duration'] }} min</small>
-                                    </div>
-                                    <p class="mb-0 mt-2">
-                                        <i class="bi bi-heart toggle-heart text-danger" style="cursor: pointer;"></i>
-                                        <span class="text-muted">Save</span>
-                                    </p>
+            <div class="row row-cols-4 g-4 mt-4">
+                @foreach($latestRecipes as $recipe)
+                <div class="col">
+                    <a href="{{ route('recipes.show', $recipe) }}" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm">
+                            <img src="{{ $recipe->image ? asset($recipe->image) : asset('images/placeholder.jpg') }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="{{ $recipe->title }}">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ $recipe->title }}</h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-warning">★★★★☆</span>
+                                    <small class="text-muted">{{ $recipe->duration }} min</small>
                                 </div>
-                                <hr class="my-2">
-                                <div class="card-footer bg-white border-0 d-flex align-items-center justify-content-center">
-                                    <img src="{{ $recipe['author']['avatar'] }}" class="rounded-circle me-2" width="30" height="30" alt="{{ $recipe['author']['name'] }}">
-                                    <small class="text-muted">{{ $recipe['author']['name'] }}</small>
-                                </div>
+                                <p class="mb-0 mt-2">
+                                    <i class="bi bi-heart toggle-heart text-danger" style="cursor: pointer;"></i>
+                                    <span class="text-muted">Save</span>
+                                </p>
                             </div>
-                        </a>
-                    </div>
+                            <hr class="my-2">
+                            <div class="card-footer bg-white border-0 d-flex align-items-center justify-content-center">
+                                <img src="{{ asset($recipe->user->avatar ?? 'default.jpg') }}" class="rounded-circle me-2" width="30" height="30" alt="Author">
+                                <small class="text-muted">{{ $recipe->user->name }}</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
                 @endforeach
             </div>
         </div>
