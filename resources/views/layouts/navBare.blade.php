@@ -5,6 +5,7 @@
     <title>Cooking Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
@@ -55,33 +56,52 @@
             font-weight: bold;
         }
     </style>
+
+
+
 </head>
 <body>
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
         <div class="container">
-            <a class="navbar-brand" href="#"><img src="{{ asset('images/cuisine1.png') }}" alt="Logo" style="width: 30px;"> Cook Note</a>
+            <a class="navbar-brand" href="#"><img src="{{ asset('images/cuisine1.png') }}" alt="Logo" style="width: 30px;">&nbsp; Cook & Share</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto ms-4">
-                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Recipes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Pages</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('recette.index') }}">Recipes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('recipes.index') }}">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('auteurs.index') }}">Pages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/chatbot') }}">IA</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('add-recipe') }}">Add Recipe</a></li>
                 </ul>
-                <div>
+                <!--<div>
                     <button class="btn btn-outline-light me-2">👤</button>
                     <button class="btn btn-light">➕</button>
+                </div>-->
+                <div>
+                    <!-- Connection Button (Login) -->
+                    @guest
+                        <a class="btn btn-outline-light me-2" href="{{ route('login') }}">Connexion</a>
+                    @else
+                        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-light me-2">Logout</button>
+                        </form>
+                    @endguest
                 </div>
             </div>
         </div>
     </nav>
 
+ 
+
     <!-- CONTENU -->
-    <main class="py-4">
+    <main>
         @yield('content')
     </main>
+
+    
 
 </body>
 </html>
