@@ -79,7 +79,7 @@
                 <!-- Right aligned items -->
                 <div class="d-flex align-items-center">
                     <!-- HEART ICON BUTTON -->
-                    <a href="{{-- route('favorites.index') or '#' for now --}}" class="btn btn-outline-light me-2" title="Favoris">
+                    <a href="{{ route('favorites.index') }}" class="btn btn-outline-light me-2" title="Favoris">
                         <i class="bi bi-heart"></i>
                         {{-- For a filled heart, use: <i class="bi bi-heart-fill"></i> --}}
                     </a>

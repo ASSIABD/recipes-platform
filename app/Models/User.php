@@ -14,6 +14,14 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * Get the recipes that are favorited by the user.
+     */
+    public function favoriteRecipes()
+    {
+        return $this->belongsToMany(Recipe::class, 'favorite_recipes', 'user_id', 'recipe_id');
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>

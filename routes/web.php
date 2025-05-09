@@ -7,6 +7,7 @@ use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\FavoriteController;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,11 @@ Route::get('/', function () {
 
 Route::get('/navBare', function () {
     return view('layouts.navBare');
+});
+
+// Favorites routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
 });
 
 Route::get('/main', function () {
