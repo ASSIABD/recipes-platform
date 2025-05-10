@@ -9,6 +9,7 @@
             </div>
 
             <!-- SIDEBAR -->
+            @if(!request()->is('recipes/create'))
             <div class="col-md-4">
                 <!-- Search Box -->
                 <div class="search-box mb-4">
@@ -51,8 +52,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+            @endif
         </div>
     </div>
 
