@@ -35,7 +35,7 @@ Route::get('/auteurs', [AuthorController::class, 'index'])->name('auteurs.index'
 
 
 // Les routes Recettes
-Route::get('/AllRecipes', [RecipeController::class, 'index1'])->name('recette.index');
+Route::get('/AllRecipes', [RecipeController::class, 'index'])->name('recette.index');
 //Route::get('/recipes/{id}', [RecipeController::class, 'showDesc'])->name('recipes.show');
 
 

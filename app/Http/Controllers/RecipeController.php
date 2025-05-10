@@ -11,23 +11,44 @@ use Illuminate\Support\Facades\Storage;
 
 class RecipeController extends Controller
 {
-    public function index1()
+    public function index(Request $request)
     {
-        // Get all recipes with their authors and categories
-        $recipes = Recipe::with(['user', 'category'])
-            ->latest()
-            ->paginate(12);
+        // Get search parameters
+        $keywords = $request->input('keywords');
+        $categoryId = $request->input('category');
 
-        return view('recipes.showRecipe', compact('recipes'));
-    }
+        // Start building the query
+        $query = Recipe::query()->with(['user', 'category']);
 
-    public function index()
-    {
-        $recipes = Recipe::with(['user', 'category'])
-            ->latest()
-            ->paginate(10);
+        // Apply search filters
+        if ($keywords) {
+            $query->where(function ($q) use ($keywords) {
+                $q->where('title', 'LIKE', "%{$keywords}%")
+                  ->orWhere('description', 'LIKE', "%{$keywords}%")
+                  ->orWhereHas('category', function($cq) use ($keywords) {
+                    $cq->where('name', 'LIKE', "%{$keywords}%");
+                  });
+            });
+        }
 
-        return view('recipes.index', compact('recipes'));
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
+
+        // Get the results
+        $recipes = $query->latest()->paginate(10);
+        
+        // Get all categories for the dropdown
+        $searchableCategories = Category::orderBy('name')->get();
+
+        // Return the view with all the data
+        return view('recipes.index', [
+            'recipes' => $recipes,
+            'searchableCategories' => $searchableCategories
+        ])
+        ->with([
+            'searchActionUrl' => route('recette.index')
+        ]);
     }
 
     /**

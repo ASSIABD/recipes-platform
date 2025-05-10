@@ -12,17 +12,39 @@
             @if(!request()->is('recipes/create'))
             <div class="col-md-4">
                 <!-- Search Box -->
-                <div class="search-box mb-4">
+                <div class="search-box mb-4" style="background-color: #EA5748; padding: 20px; border-radius: 10px; color: white;">
                     <h5><i class="bi bi-search"></i> Rechercher</h5>
-                    <div class="input-group mb-3"> <span class="input-group-text"> <i class="bi bi-question-circle"></i> </span> <input type="text" class="form-control" placeholder="Keywords..."> </div>
-                    <div class="input-group mb-3"> <span class="input-group-text"> <i class="bi bi-folder"></i> </span> 
-                        <select class="form-select"> 
-                            <option>All Categories</option> 
-                            <option>Fish</option> 
-                            <option>Salads</option> 
-                        </select> 
-                    </div>
-                    <button class="btn w-100">Search Now</button>
+                    <form method="GET" action="{{ route('recette.index') }}">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" style="background-color: #f0f0f0; border-color: #ced4da;">
+                                <i class="bi bi-question-circle"></i>
+                            </span>
+                            <input type="text" 
+                                   name="keywords" 
+                                   class="form-control" 
+                                   placeholder="Keywords..." 
+                                   value="{{ request('keywords') }}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" style="background-color: #f0f0f0; border-color: #ced4da;">
+                                <i class="bi bi-folder"></i>
+                            </span>
+                            <select name="category" class="form-select">
+                                <option value="">All Categories</option>
+                                @if(isset($searchableCategories))
+                                    @foreach($searchableCategories as $category)
+                                        <option value="{{ $category->id }}" 
+                                                {{ request('category') == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <button type="submit" class="btn w-100" style="background-color: #444; color: white;">
+                            <i class="bi bi-search"></i> Search Now
+                        </button>
+                    </form>
                 </div>
 
                 <!-- Tags with images -->
