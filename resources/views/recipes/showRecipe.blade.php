@@ -41,23 +41,19 @@
         <div class="col">
             <a href="{{ route('recipes.show', $recipe->id) }}" class="text-decoration-none text-dark">
                 <div class="card h-100 shadow-sm">
-                    <img src="{{ $recipe->image ? asset($recipe->image) : asset('images/placeholder.jpg') }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="{{ $recipe->title }}">
+                    <img src="{{ $recipe->image ? asset('storage/' . $recipe->image) : asset('images/placeholder.jpg') }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="{{ $recipe->title }}">
                     <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <img src="{{ asset('avatars/avatarInconnue.jpg') }}" alt="{{ $recipe->user->name }}" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;">
+                            <small class="text-muted">{{ $recipe->user->name }}</small>
+                        </div>
                         <h6 class="card-title">{{ $recipe->title }}</h6>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="text-warning">★★★★☆</span>
                             <small class="text-muted">{{ $recipe->duration ?? 'N/A' }} min</small>
                         </div>
-                        <p class="mb-0 mt-2">
-                            <i class="bi bi-heart toggle-heart text-danger" style="cursor: pointer;"></i>
-                            <span class="text-muted">Save</span>
-                        </p>
                     </div>
-                    <hr class="my-2">
-                    <div class="card-footer bg-white border-0 d-flex align-items-center justify-content-center">
-                        <img src="{{ asset($recipe->user->avatar ?? 'default.jpg') }}" class="rounded-circle me-2" width="30" height="30" alt="Author">
-                        <small class="text-muted">{{ $recipe->user->name }}</small>
-                    </div>
+
                 </div>
             </a>
         </div>

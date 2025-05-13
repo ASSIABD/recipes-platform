@@ -6,7 +6,7 @@
         <div class="row g-0">
             <div class="col-md-4">
                 @if($recipe->image)
-                    <img src="{{ asset($recipe->image) }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="{{ $recipe->title }}">
+                    <img src="{{ asset('storage/' . $recipe->image) }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="{{ $recipe->title }}">
                 @else
                     <div class="bg-light text-center py-5 h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="bi bi-camera text-muted" style="font-size: 4rem;"></i>
@@ -24,9 +24,12 @@
                         </span>
                         <span class="badge bg-secondary me-2 mb-2"><i class="bi bi-clock"></i> {{ $recipe->duration }} minutes</span>
                     </div>
-                    <div class="mb-3">
-                        <p class="text-muted mb-1"><i class="bi bi-person-circle"></i> By {{ $recipe->user->name }}</p>
-                        <p class="text-muted mb-0"><i class="bi bi-calendar"></i> {{ $recipe->created_at->format('F d, Y') }}</p>
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ asset('avatars/avatarInconnue.jpg') }}" alt="{{ $recipe->user->name }}" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                        <div>
+                            <p class="text-muted mb-0">By {{ $recipe->user->name }}</p>
+                            <p class="text-muted mb-0 small"><i class="bi bi-calendar"></i> {{ $recipe->created_at->format('F d, Y') }}</p>
+                        </div>
                     </div>
                     <p class="card-text">{{ $recipe->description }}</p>
 

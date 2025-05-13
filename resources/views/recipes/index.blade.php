@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="col-md-6 mb-4">
                     <div class="card h-100 shadow-sm no-click">
                         <div class="position-relative">
-                            <img src="{{ $recipe->image }}" class="card-img-top" alt="{{ $recipe->title }}" style="height: 200px; object-fit: cover;">
+                            <img src="{{ $recipe->image ? asset('storage/' . $recipe->image) : 'https://via.placeholder.com/300x200?text=No+Image' }}" class="card-img-top" alt="{{ $recipe->title }}" style="height: 200px; object-fit: cover;">
                             <div class="position-absolute top-0 end-0 m-2">
                                 <span class="badge bg-{{ $recipe->difficulty == 'easy' ? 'success' : ($recipe->difficulty == 'medium' ? 'warning' : 'danger') }}">
                                     {{ ucfirst($recipe->difficulty) }}
@@ -129,13 +129,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ $recipe->title }}</h5>
-                            <p class="card-text text-muted mb-2">
-                                <i class="bi bi-person-circle"></i> {{ $recipe->user->name }} |
-                                <i class="bi bi-folder"></i> {{ $recipe->category->name }} |
-                                <i class="bi bi-clock"></i> {{ $recipe->duration }} min
-                            </p>
-                            <p class="card-text">{{ Str::limit($recipe->description, 100) }}</p>
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="{{ asset('avatars/avatarInconnue.jpg') }}" alt="{{ $recipe->user->name }}" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;">
+                                <div>
+                                    <h5 class="card-title mb-0">{{ $recipe->title }}</h5>
+                                    <p class="card-text text-muted small mb-0">
+                                        <i class="bi bi-folder"></i> {{ $recipe->category->name }} |
+                                        <i class="bi bi-clock"></i> {{ $recipe->duration }} min
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="card-text mt-2">{{ Str::limit($recipe->description, 100) }}</p>
                         </div>
                         <div class="card-footer bg-white border-top-0 text-center">
                             <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-outline-danger btn-sm">
