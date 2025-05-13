@@ -22,7 +22,7 @@
                         <span class="badge bg-{{ $recipe->difficulty == 'easy' ? 'success' : ($recipe->difficulty == 'medium' ? 'warning' : 'danger') }} me-2 mb-2">
                             {{ ucfirst($recipe->difficulty) }}
                         </span>
-                        <span class="badge bg-secondary me-2 mb-2"><i class="bi bi-clock"></i> {{ $recipe->duration }} min</span>
+                        <span class="badge bg-secondary me-2 mb-2"><i class="bi bi-clock"></i> {{ $recipe->duration }} minutes</span>
                     </div>
                     <div class="mb-3">
                         <p class="text-muted mb-1"><i class="bi bi-person-circle"></i> By {{ $recipe->user->name }}</p>
@@ -120,7 +120,7 @@
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between">
                                 <strong>{{ $comment->user->name }}</strong>
-                                <small class="text-muted">Date: <span class="text-danger">{{ $comment->created_at->format('d/m/Y') }}</span></small>
+                                <small class="text-muted">Date: <span class="text-danger">{{ $comment->created_at->format('M d, Y') }}</span></small>
                             </div>
                             <span class="text-warning">★★★★☆</span>
                         </div>

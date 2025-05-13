@@ -92,7 +92,7 @@
 
                     <!-- Connection/Logout Button -->
                     @guest
-                        <a class="btn btn-outline-light me-2" href="{{ route('login') }}">Connexion</a>
+                        <a class="btn btn-outline-light me-2" href="{{ route('login') }}">Login</a>
                     @else
                         <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                             @csrf
