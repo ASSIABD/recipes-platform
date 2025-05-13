@@ -80,25 +80,41 @@
                 <div class="d-flex align-items-center">
                     <!-- Favorites Link with Count -->
                     @auth
-                    <div class="position-relative me-2">
-                        <a href="{{ route('favorites.index') }}" class="btn btn-outline-light position-relative" title="Mes Favoris">
-                            <i class="bi bi-heart"></i>
-                            <span id="favorites-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
-                                {{ auth()->user()->favorites()->where('item_type', 'App\\Models\\Recipe')->count() }}
-                            </span>
-                        </a>
-                    </div>
-                    @endauth
+                    <!-- Add New Recipe Button -->
+                    <a href="{{ route('recipes.create') }}" class="btn btn-outline-light me-3">
+                        <i class="bi bi-plus-circle"></i> New Recipe
+                    </a>
 
-                    <!-- Connection/Logout Button -->
-                    @guest
-                        <a class="btn btn-outline-light me-2" href="{{ route('login') }}">Login</a>
+                    <!-- User Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-1"></i>
+                            {{ Auth::user()->name }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{{ route('favorites.index') }}">
+                                <i class="bi bi-heart me-2"></i>Favorites
+                                <span class="badge bg-danger rounded-pill ms-2">
+                                    {{ auth()->user()->favorites()->where('item_type', 'App\\Models\\Recipe')->count() }}
+                                </span>
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                     @else
-                        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-light me-2">Logout</button>
-                        </form>
-                    @endguest
+                    <!-- Login Button for guests -->
+                    <a class="btn btn-outline-light me-2" href="{{ route('login') }}">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                    </a>
+                    @endauth
                 </div>
             </div>
         </div>
