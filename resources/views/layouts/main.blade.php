@@ -66,5 +66,54 @@
         </div>
     </div>
 
+    <!-- Heart Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Toggle heart icon and save state
+            document.querySelectorAll('.toggle-heart').forEach(function(icon) {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Toggle between empty and filled heart
+                    this.classList.toggle('bi-heart');
+                    this.classList.toggle('bi-heart-fill');
+                    
+                    // Toggle text between Save/Unsave if needed
+                    const textElement = this.nextElementSibling;
+                    if (textElement && textElement.classList.contains('text-muted')) {
+                        if (this.classList.contains('bi-heart-fill')) {
+                            textElement.textContent = 'Saved';
+                        } else {
+                            textElement.textContent = 'Save';
+                        }
+                    }
+                    
+                    // Here you would typically make an AJAX call to save to favorites
+                    // For example:
+                    // fetch('/favorites/toggle', {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'Content-Type': 'application/json',
+                    //         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    //     },
+                    //     body: JSON.stringify({
+                    //         recipe_id: this.dataset.recipeId
+                    //     })
+                    // })
+                    // .then(response => response.json())
+                    // .then(data => {
+                    //     console.log('Success:', data);
+                    // })
+                    // .catch((error) => {
+                    //     console.error('Error:', error);
+                    //     // Revert the UI if the request fails
+                    //     this.classList.toggle('bi-heart');
+                    //     this.classList.toggle('bi-heart-fill');
+                    // });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

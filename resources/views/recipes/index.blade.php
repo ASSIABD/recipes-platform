@@ -140,6 +140,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
                             <p class="card-text mt-2">{{ Str::limit($recipe->description, 100) }}</p>
+                            <div class="d-flex align-items-center mt-2">
+                                <i class="bi bi-heart toggle-heart text-danger me-1" style="cursor: pointer;"></i>
+                                <small class="text-muted">Save</small>
+                            </div>
                         </div>
                         <div class="card-footer bg-white border-top-0 text-center">
                             <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-outline-danger btn-sm">

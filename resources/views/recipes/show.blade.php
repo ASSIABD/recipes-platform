@@ -32,6 +32,11 @@
                         </div>
                     </div>
                     <p class="card-text">{{ $recipe->description }}</p>
+                    
+                    <div class="d-flex align-items-center mt-3">
+                        <i class="bi bi-heart toggle-heart text-danger me-1" style="cursor: pointer; font-size: 1.2rem;"></i>
+                        <span class="text-muted">Save Recipe</span>
+                    </div>
 
                     @if(Auth::check() && Auth::id() === $recipe->user_id)
                         <div class="d-flex gap-2 mt-3">

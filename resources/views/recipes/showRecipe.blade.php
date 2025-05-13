@@ -52,6 +52,10 @@
                             <span class="text-warning">★★★★☆</span>
                             <small class="text-muted">{{ $recipe->duration ?? 'N/A' }} min</small>
                         </div>
+                        <div class="d-flex align-items-center mt-2">
+                            <i class="bi bi-heart toggle-heart text-danger me-1" style="cursor: pointer;"></i>
+                            <small class="text-muted">Save</small>
+                        </div>
                     </div>
 
                 </div>
