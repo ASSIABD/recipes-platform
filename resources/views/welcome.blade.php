@@ -643,14 +643,9 @@
                             <img src="{{ $recipe->image ? asset($recipe->image) : asset('images/placeholder.jpg') }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="{{ $recipe->title }}">
                             <div class="card-body">
                                 <h6 class="card-title">{{ $recipe->title }}</h6>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="text-warning">★★★★☆</span>
-                                    <small class="text-muted">{{ $recipe->duration }} min</small>
+                                <div class="d-flex justify-content-end">
+                                    <small class="text-muted">{{ $recipe->duration ?? 'N/A' }} min</small>
                                 </div>
-                                <p class="mb-0 mt-2">
-                                    <i class="bi bi-heart toggle-heart text-danger" style="cursor: pointer;"></i>
-                                    <span class="text-muted">Save</span>
-                                </p>
                             </div>
                             <hr class="my-2">
                             <div class="card-footer bg-white border-0 d-flex align-items-center justify-content-center">

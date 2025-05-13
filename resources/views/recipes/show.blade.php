@@ -6,7 +6,7 @@
         <div class="row g-0">
             <div class="col-md-4">
                 @if($recipe->image)
-                    <img src="{{ strpos($recipe->image, 'http') === 0 ? $recipe->image : asset('storage/' . $recipe->image) }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="{{ $recipe->title }}">
+                    <img src="{{ asset($recipe->image) }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="{{ $recipe->title }}">
                 @else
                     <div class="bg-light text-center py-5 h-100 d-flex flex-column justify-content-center align-items-center">
                         <i class="bi bi-camera text-muted" style="font-size: 4rem;"></i>
@@ -31,15 +31,16 @@
                     <p class="card-text">{{ $recipe->description }}</p>
 
                     @if(Auth::check() && Auth::id() === $recipe->user_id)
-                        <div class="mt-3">
-                            <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-outline-primary me-2">
-                                <i class="bi bi-pencil"></i> Edit
+                        <div class="d-flex gap-2 mt-3">
+                            <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-primary">
+                                <i class="bi bi-pencil me-1"></i> Edit Recipe
                             </a>
                             <form action="{{ route('recipes.destroy', $recipe->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this recipe?')">
-                                    <i class="bi bi-trash"></i> Delete
+                                <button type="submit" class="btn btn-danger" 
+                                        onclick="return confirm('Are you sure you want to delete this recipe? This action cannot be undone.')">
+                                    <i class="bi bi-trash me-1"></i> Delete Recipe
                                 </button>
                             </form>
                         </div>
@@ -86,7 +87,7 @@
                                     <h2 class="accordion-header">
                                         <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }}" type="button" 
                                                 data-bs-toggle="collapse" data-bs-target="#step{{ $index }}">
-                                            Step {{ $stepCount }}: {{ substr(strip_tags($step), 0, 60) }}
+                                            Step {{ $stepCount }}: {{ Str::limit(strip_tags($step), 60) }}
                                         </button>
                                     </h2>
                                     <div id="step{{ $index }}" class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}" 
@@ -106,33 +107,30 @@
     </div>
     
     <!-- Review & Rating Section -->
-<div class="card mt-4 shadow-sm">
-    <div class="card-header bg-light">
-        <h5 class="mb-0"><i class="bi bi-star text-danger"></i> Review & Rating</h5>
-    </div>
-    <div class="card-body">
-        @forelse ($recipe->comments as $comment)
-            <div class="mb-4 border-bottom pb-3">
-                <div class="d-flex align-items-start mb-2">
-                    <img src="{{ asset($comment->user->avatar ?? 'default.jpg') }}" class="rounded-circle me-3" width="40" height="40" alt="User Avatar">
-                    
-                    <div class="flex-grow-1">
-                        <div class="d-flex justify-content-between">
-                            <strong>{{ $comment->user->name }}</strong>
-                            <small class="text-muted">Date: <span class="text-danger">{{ $comment->created_at->format('d/m/Y') }}</span></small>
+    <div class="card mt-4 shadow-sm">
+        <div class="card-header bg-light">
+            <h5 class="mb-0"><i class="bi bi-star text-danger"></i> Review & Rating</h5>
+        </div>
+        <div class="card-body">
+            @forelse ($recipe->comments as $comment)
+                <div class="mb-4 border-bottom pb-3">
+                    <div class="d-flex align-items-start mb-2">
+                        <img src="{{ asset($comment->user->avatar ?? 'default.jpg') }}" class="rounded-circle me-3" width="40" height="40" alt="User Avatar">
+                        
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between">
+                                <strong>{{ $comment->user->name }}</strong>
+                                <small class="text-muted">Date: <span class="text-danger">{{ $comment->created_at->format('d/m/Y') }}</span></small>
+                            </div>
+                            <span class="text-warning">★★★★☆</span>
                         </div>
-                        <span class="text-warning">★★★★☆</span>
                     </div>
+                    <p class="mb-0">{{ $comment->content }}</p>
                 </div>
-                <p class="mb-0">{{ $comment->content }}</p>
-            </div>
-        @empty
-            <p class="text-muted">No comments yet for this recipe.</p>
-        @endforelse
+            @empty
+                <p class="text-muted">No comments yet for this recipe.</p>
+            @endforelse
+        </div>
     </div>
-</div>
-
-
-
 </div>
 @endsection

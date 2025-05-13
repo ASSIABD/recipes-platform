@@ -126,13 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     {{ ucfirst($recipe->difficulty) }}
                                 </span>
                             </div>
-                            <div class="position-absolute top-0 start-0 m-2" style="z-index: 1000;">
-                                @include('components.favorite-button', [
-                                    'recipe' => $recipe,
-                                    'isFavorited' => auth()->check() && auth()->user()->favoriteRecipes()->where('item_id', $recipe->id)->exists(),
-                                    'favoritesCount' => $recipe->favorites()->count()
-                                ])
-                            </div>
+
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $recipe->title }}</h5>
@@ -143,8 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             </p>
                             <p class="card-text">{{ Str::limit($recipe->description, 100) }}</p>
                         </div>
-                        <div class="card-footer bg-white border-top-0">
-                            <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-outline-danger">
+                        <div class="card-footer bg-white border-top-0 text-center">
+                            <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-outline-danger btn-sm">
                                 <i class="bi bi-eye"></i> View Recipe
                             </a>
                         </div>

@@ -1,8 +1,8 @@
 <div class="favorite-button" data-recipe-id="{{ $recipe->id }}">
-    <button type="button" class="btn btn-sm {{ $isFavorited ? 'btn-warning' : 'btn-outline-warning' }}" 
+    <button type="button" class="btn btn-sm {{ $isFavorited ? 'btn-danger' : 'btn-outline-danger' }}" 
             onclick="toggleFavorite({{ $recipe->id }})">
-        <i class="bi {{ $isFavorited ? 'bi-star-fill' : 'bi-star' }}"></i>
-        <span class="favorite-count">{{ $favoritesCount }}</span>
+        <i class="bi {{ $isFavorited ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+        <span class="favorite-count ms-1">{{ $favoritesCount }}</span>
     </button>
 </div>
 
@@ -40,15 +40,15 @@ function toggleFavorite(recipeId) {
         if (data.success) {
             // Update button appearance
             if (data.is_favorited) {
-                button.classList.remove('btn-outline-warning');
-                button.classList.add('btn-warning');
-                icon.classList.remove('bi-star');
-                icon.classList.add('bi-star-fill');
+                button.classList.remove('btn-outline-danger');
+                button.classList.add('btn-danger');
+                icon.classList.remove('bi-heart');
+                icon.classList.add('bi-heart-fill');
             } else {
-                button.classList.remove('btn-warning');
-                button.classList.add('btn-outline-warning');
-                icon.classList.remove('bi-star-fill');
-                icon.classList.add('bi-star');
+                button.classList.remove('btn-danger');
+                button.classList.add('btn-outline-danger');
+                icon.classList.remove('bi-heart-fill');
+                icon.classList.add('bi-heart');
             }
             
             // Update count
@@ -95,15 +95,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 const countSpan = button.querySelector('.favorite-count');
                 
                 if (data.is_favorited) {
-                    btn.classList.remove('btn-outline-warning');
-                    btn.classList.add('btn-warning');
-                    icon.classList.remove('bi-star');
-                    icon.classList.add('bi-star-fill');
+                    btn.classList.remove('btn-outline-danger');
+                    btn.classList.add('btn-danger');
+                    icon.classList.remove('bi-heart');
+                    icon.classList.add('bi-heart-fill');
                 } else {
-                    btn.classList.remove('btn-warning');
-                    btn.classList.add('btn-outline-warning');
-                    icon.classList.remove('bi-star-fill');
-                    icon.classList.add('bi-star');
+                    btn.classList.remove('btn-danger');
+                    btn.classList.add('btn-outline-danger');
+                    icon.classList.remove('bi-heart-fill');
+                    icon.classList.add('bi-heart');
                 }
                 
                 if (countSpan && typeof data.favorites_count !== 'undefined') {

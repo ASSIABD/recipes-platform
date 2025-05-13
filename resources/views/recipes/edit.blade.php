@@ -59,7 +59,10 @@
                             <label for="image" class="form-label">Recipe Image</label>
                             @if($recipe->image)
                                 <div class="mb-2">
-                                    <img src="{{ asset('storage/' . $recipe->image) }}" alt="{{ $recipe->title }}" class="img-thumbnail" style="max-height: 150px;">
+                                    <img src="{{ strpos($recipe->image, 'http') === 0 ? $recipe->image : asset('storage/' . $recipe->image) }}" 
+                                         alt="{{ $recipe->title }}" 
+                                         class="img-thumbnail" 
+                                         style="max-height: 150px; width: 100%; object-fit: cover;">
                                 </div>
                             @endif
                             <input type="file" class="form-control" id="image" name="image">
@@ -86,7 +89,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">
+                    <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Cancel
                     </a>
                     <button type="submit" class="btn btn-danger">
