@@ -85,7 +85,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('auteurs.index') }}">
-                            <i class="bi bi-collection me-1"></i>Pages
+                            <i class="bi bi-people me-1"></i>Authors
                         </a>
                     </li>
                     <li class="nav-item">
