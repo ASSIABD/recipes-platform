@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Favorite;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Recipe extends Model
@@ -32,9 +33,22 @@ class Recipe extends Model
         return $this->hasMany(Rating::class);
     }
 
+    /**
+     * Get all favorites for this recipe.
+     */
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'item_id')
+            ->where('item_type', self::class);
+    }
+
+    /**
+     * Get all of the users who favorited this recipe.
+     */
     public function favoritedBy()
     {
-        return $this->belongsToMany(User::class, 'favorites');
+        return $this->belongsToMany(User::class, 'favorites', 'item_id', 'user_id')
+            ->wherePivot('item_type', self::class);
     }
 
     public function averageRating()

@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+        // Clear existing categories and seed new ones
+        $this->call([
+            CategoriesTableSeeder::class,
+        ]);
+        
         // Get all existing users
         $users = User::all();
 
@@ -86,5 +91,6 @@ class DatabaseSeeder extends Seeder
         }
 
         echo "10 recipes added successfully.\n";
+        }
     }
 }

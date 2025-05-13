@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('styles')
+@push('styles')
 <style>
     .favorite-heart {
         cursor: pointer;
@@ -47,7 +47,7 @@
         pointer-events: none;
     }
 </style>
-@endsection
+@endpush
 
 @section('scripts')
 <script>
@@ -91,7 +91,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
 @section('corps')
 <div class="container">
-    <h2 class="mb-4"><i class="bi bi-journal-richtext"></i> My Recipes</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-journal-richtext"></i> My Recipes</h2>
+        <a href="{{ route('recipes.create') }}" class="btn btn-danger">
+            <i class="bi bi-plus-circle"></i> Add New Recipe
+        </a>
+    </div>
+    
+    @if(request()->has('search') || request()->has('category'))
+        <div class="alert alert-info mb-4">
+            <i class="bi bi-funnel"></i> Filtered results 
+            @if(request('search'))
+                for: <strong>{{ request('search') }}</strong>
+            @endif
+            @if(request('category'))
+                @php $category = \App\Models\Category::find(request('category')); @endphp
+                @if($category)
+                    in category: <strong>{{ $category->name }}</strong>
+                @endif
+            @endif
+            <a href="{{ route('recipes.index') }}" class="float-end">Clear filters</a>
+        </div>
+    @endif
     
     @if(count($recipes) > 0)
         <div class="row">
@@ -106,7 +127,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </span>
                             </div>
                             <div class="position-absolute top-0 start-0 m-2" style="z-index: 1000;">
-                                <i class="{{ auth()->check() && auth()->user()->favoriteRecipes()->where('recipe_id', $recipe->id)->exists() ? 'fa-solid' : 'fa-regular' }} fa-heart favorite-heart {{ auth()->check() && auth()->user()->favoriteRecipes()->where('recipe_id', $recipe->id)->exists() ? 'active' : '' }}" data-recipe-id="{{ $recipe->id }}" style="z-index: 1000;"></i>
+                                @include('components.favorite-button', [
+                                    'recipe' => $recipe,
+                                    'isFavorited' => auth()->check() && auth()->user()->favoriteRecipes()->where('item_id', $recipe->id)->exists(),
+                                    'favoritesCount' => $recipe->favorites()->count()
+                                ])
                             </div>
                         </div>
                         <div class="card-body">

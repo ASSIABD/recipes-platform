@@ -13,15 +13,25 @@
                 <!-- Search Box -->
                 <div class="search-box mb-4">
                     <h5><i class="bi bi-search"></i> Rechercher</h5>
-                    <div class="input-group mb-3"> <span class="input-group-text"> <i class="bi bi-question-circle"></i> </span> <input type="text" class="form-control" placeholder="Keywords..."> </div>
-                    <div class="input-group mb-3"> <span class="input-group-text"> <i class="bi bi-folder"></i> </span> 
-                        <select class="form-select"> 
-                            <option>All Categories</option> 
-                            <option>Fish</option> 
-                            <option>Salads</option> 
-                        </select> 
-                    </div>
-                    <button class="btn w-100">Search Now</button>
+                    <form action="{{ route('recipes.index') }}" method="GET">
+                        @csrf
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
+                            <input type="text" name="search" class="form-control" placeholder="Keywords..." value="{{ request('search') }}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="bi bi-folder"></i></span>
+                            <select name="category" class="form-select">
+                                <option value="">All Categories</option>
+                                @foreach(\App\Models\Category::all() as $category)
+                                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-danger w-100">Search Now</button>
+                    </form>
                 </div>
 
                 <!-- Tags with images -->

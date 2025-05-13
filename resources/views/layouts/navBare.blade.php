@@ -78,11 +78,17 @@
                 
                 <!-- Right aligned items -->
                 <div class="d-flex align-items-center">
-                    <!-- HEART ICON BUTTON -->
-                    <a href="{{ route('favorites.index') }}" class="btn btn-outline-light me-2" title="Favoris">
-                        <i class="bi bi-heart"></i>
-                        {{-- For a filled heart, use: <i class="bi bi-heart-fill"></i> --}}
-                    </a>
+                    <!-- Favorites Link with Count -->
+                    @auth
+                    <div class="position-relative me-2">
+                        <a href="{{ route('favorites.index') }}" class="btn btn-outline-light position-relative" title="Mes Favoris">
+                            <i class="bi bi-heart"></i>
+                            <span id="favorites-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                                {{ auth()->user()->favorites()->where('item_type', 'App\\Models\\Recipe')->count() }}
+                            </span>
+                        </a>
+                    </div>
+                    @endauth
 
                     <!-- Connection/Logout Button -->
                     @guest
@@ -103,5 +109,29 @@
         @yield('content')
     </main>
 
+    @auth
+    <script>
+        // Function to update favorites count
+        function updateFavoritesCount() {
+            fetch('/favorites/count')
+                .then(response => response.json())
+                .then(data => {
+                    const countBadge = document.getElementById('favorites-count');
+                    if (countBadge && data.success) {
+                        countBadge.textContent = data.count;
+                    }
+                })
+                .catch(error => console.error('Error updating favorites count:', error));
+        }
+
+        // Update count when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateFavoritesCount();
+        });
+
+        // Listen for custom event to update favorites count
+        document.addEventListener('favoritesUpdated', updateFavoritesCount);
+    </script>
+    @endauth
 </body>
 </html>

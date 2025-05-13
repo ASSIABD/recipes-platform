@@ -14,11 +14,20 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * Get the recipes that are favorited by the user.
+     * Get all of the user's favorite items.
+     */
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    /**
+     * Get all of the user's favorite recipes.
      */
     public function favoriteRecipes()
     {
-        return $this->belongsToMany(Recipe::class, 'favorite_recipes', 'user_id', 'recipe_id');
+        return $this->morphedByMany(Recipe::class, 'item', 'favorites')
+            ->withTimestamps();
     }
 
     /**
@@ -73,10 +82,7 @@ class User extends Authenticatable
         return $this->hasMany(Rating::class);
     }
 
-    public function favorites()
-    {
-        return $this->belongsToMany(Recipe::class, 'favorites');
-    }
+
 
     
 }

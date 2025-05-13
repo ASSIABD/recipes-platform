@@ -21,7 +21,9 @@ Route::get('/navBare', function () {
 // Favorites routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
-    Route::post('/favorites/toggle/{recipe}', [FavoriteController::class, 'toggleFavorite'])->name('favorites.toggle');
+    Route::post('/favorites/{id}/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorites.toggle');
+    Route::get('/favorites/{id}/check', [FavoriteController::class, 'checkFavorite'])->name('favorites.check');
+    Route::get('/favorites/count', [FavoriteController::class, 'count'])->name('favorites.count');
 });
 
 Route::get('/main', function () {

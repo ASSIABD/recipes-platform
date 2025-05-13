@@ -13,21 +13,52 @@ class RecipeController extends Controller
 {
     public function index1()
     {
-        // Get all recipes with their authors and categories
-        $recipes = Recipe::with(['user', 'category'])
-            ->latest()
-            ->paginate(12);
+        $query = Recipe::with(['user', 'category']);
 
-        return view('recipes.showRecipe', compact('recipes'));
+        // Apply search filter
+        if (request()->has('search')) {
+            $search = request('search');
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('ingredients', 'like', "%{$search}%");
+            });
+        }
+
+        // Apply category filter
+        if (request()->has('category') && !empty(request('category'))) {
+            $query->where('category_id', request('category'));
+        }
+
+        $recipes = $query->latest()->paginate(12);
+        $categories = Category::all();
+
+        return view('recipes.showRecipe', compact('recipes', 'categories'));
     }
 
     public function index()
     {
-        $recipes = Recipe::with(['user', 'category'])
-            ->latest()
-            ->paginate(10);
+        $query = Recipe::with(['user', 'category']);
 
-        return view('recipes.index', compact('recipes'));
+        // Apply search filter
+        if (request()->has('search')) {
+            $search = request('search');
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('ingredients', 'like', "%{$search}%");
+            });
+        }
+
+        // Apply category filter
+        if (request()->has('category') && !empty(request('category'))) {
+            $query->where('category_id', request('category'));
+        }
+
+        $recipes = $query->latest()->paginate(12);
+        $categories = Category::all();
+
+        return view('recipes.index', compact('recipes', 'categories'));
     }
 
     /**

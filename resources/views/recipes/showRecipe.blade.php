@@ -11,21 +11,26 @@
 
     <!-- Search Box -->
     <div class="search-box mb-5">
-        <div class="row g-2 align-items-center">
-            <div class="col-md-5">
-                <input type="text" class="form-control" placeholder="Keywords...">
+        <form action="{{ route('recette.index') }}" method="GET" class="mb-4">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-5">
+                    <input type="text" name="search" class="form-control" placeholder="Search recipes..." value="{{ request('search') }}">
+                </div>
+                <div class="col-md-4">
+                    <select name="category" class="form-select">
+                        <option value="">All Categories</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </div>
             </div>
-            <div class="col-md-4">
-                <select class="form-select">
-                    <option selected>All Categories</option>
-                    <option>Soup</option>
-                    <option>Salad</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <button class="btn w-100">Search Now</button>
-            </div>
-        </div>
+        </form>
     </div>
 
     

@@ -1,32 +1,22 @@
-@extends('layouts.navBare')
+@extends('layouts.main')
 
-@section('content')
-<div class="container mt-4">
+@section('corps')
+<div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <h1 class="text-center mb-4">Mes Recettes Préférées</h1>
-            
-            @if(isset($favorites) && count($favorites) > 0)
-                <div class="row">
-                    @foreach($favorites as $recipe)
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <img src="{{ asset('storage/' . $recipe->image) }}" class="card-img-top" alt="{{ $recipe->title }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $recipe->title }}</h5>
-                                    <p class="card-text">{{ Str::limit($recipe->description, 100) }}</p>
-                                    <a href="{{ route('recette.show', $recipe->id) }}" class="btn btn-outline-danger">Voir la recette</a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0"><i class="bi bi-heart-fill"></i> My Favorite Recipes</h4>
                 </div>
-            @else
-                <div class="text-center">
-                    <p class="lead">Vous n'avez pas encore ajouté de recettes à vos favoris.</p>
-                    <a href="{{ route('recette.index') }}" class="btn btn-outline-danger">Explorer les recettes</a>
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-heart text-muted" style="font-size: 5rem;"></i>
+                    <h3 class="mt-3">No favorite recipes yet</h3>
+                    <p class="text-muted mb-4">You haven't added any recipes to your favorites yet.</p>
+                    <a href="{{ route('recipes.index') }}" class="btn btn-danger">
+                        <i class="bi bi-book"></i> Browse Recipes
+                    </a>
                 </div>
-            @endif
+            </div>
         </div>
     </div>
 </div>
