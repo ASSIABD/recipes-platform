@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         // Clear existing categories and seed new ones
         $this->call([
             CategoriesTableSeeder::class,
+            SampleRecipesSeeder::class,
         ]);
         
         // Get all existing users

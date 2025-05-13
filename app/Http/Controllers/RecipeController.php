@@ -38,7 +38,12 @@ class RecipeController extends Controller
 
     public function index()
     {
-        $query = Recipe::with(['user', 'category']);
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('info', 'Please log in to view your recipes.');
+        }
+
+        $query = Recipe::with(['user', 'category'])
+            ->where('user_id', Auth::id());
 
         // Apply search filter
         if (request()->has('search')) {
