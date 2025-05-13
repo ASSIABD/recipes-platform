@@ -12,7 +12,7 @@
                     <i class="bi bi-heart text-muted" style="font-size: 5rem;"></i>
                     <h3 class="mt-3">No favorite recipes yet</h3>
                     <p class="text-muted mb-4">You haven't added any recipes to your favorites yet.</p>
-                    <a href="{{ route('recipes.index') }}" class="btn btn-danger">
+                    <a href="{{ url('/AllRecipes') }}" class="btn btn-danger">
                         <i class="bi bi-book"></i> Browse Recipes
                     </a>
                 </div>

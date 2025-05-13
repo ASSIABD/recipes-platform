@@ -68,12 +68,36 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavContent">
                 <ul class="navbar-nav me-auto ms-4">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('recette.index') }}">Recipes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('recipes.index') }}">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('auteurs.index') }}">Pages</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/chatbot') }}">IA</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('add-recipe') }}">Add Recipe</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}">
+                            <i class="bi bi-house me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('recette.index') }}">
+                            <i class="bi bi-book me-1"></i>Recipes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('recipes.index') }}">
+                            <i class="bi bi-journal-text me-1"></i>Blog
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('auteurs.index') }}">
+                            <i class="bi bi-collection me-1"></i>Pages
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/chatbot') }}">
+                            <i class="bi bi-robot me-1"></i>AI Assistant
+                        </a>
+                    </li>
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link" href="{{ route('add-recipe') }}">
+                            <i class="bi bi-plus-circle me-1"></i>Add Recipe
+                        </a>
+                    </li>
                 </ul>
                 
                 <!-- Right aligned items -->
